@@ -5,6 +5,7 @@ import FormEvent from './FormEvent'
 import { loadEvent, addEvent, editEvent, removeEvent } from "../actions"
 import { connect } from 'react-redux'
 import nanoid from 'nanoid'
+import { toast } from 'react-toastify'
 
 ReactModal.setAppElement('#root')
 
@@ -89,6 +90,30 @@ class Calendar extends React.Component {
         return <div className="days row">{days}</div>;
     }
     
+    dragStart = (event, event_obj) => {
+        let event_string = JSON.stringify(event_obj);
+        event.dataTransfer.setData("event_str", event_string)
+    }
+    
+    drop = (event, day, count_event) => {
+        const { editEvent } = this.props
+        let event_str = event.dataTransfer.getData("event_str")
+        let event_obj = JSON.parse(event_str);
+        let newDay = dateFns.format(
+            day,
+            'DD-MM-YYYY'
+        )
+        if (count_event < 3) {
+            event_obj.day = newDay
+            editEvent(event_obj)
+        }else if (newDay === event_obj.day) {
+        }else {
+            toast.error("Sorry, you can't add event to this date", {
+                position: toast.POSITION.TOP_LEFT
+            })
+        }
+    }
+    
     renderBgEvent(day, groupingEvent){
         let eventCount = groupingEvent.length
 
@@ -125,6 +150,8 @@ class Calendar extends React.Component {
                     key={groupingEvent[i].event_id} 
                     style={style}
                     onClick={() => this.onEditClick(day, groupingEvent[i])}
+                    draggable="true"
+                    onDragStart={(e) => this.dragStart(e, groupingEvent[i])}
                 >
                 { groupingEvent[i].event_name  }
                 </div>
@@ -188,7 +215,8 @@ class Calendar extends React.Component {
                         }
                     })
                 }
-
+                
+                let count_event = groupingEvent.length
                 formattedDate = dateFns.format(day, dateFormat)
                 const cloneDay = day;
                 days.push(
@@ -199,6 +227,8 @@ class Calendar extends React.Component {
                             : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
                         }`}
                             key={day}
+                            onDrop={(e) => this.drop(e, dateFns.parse(cloneDay), count_event)}
+                            onDragOver={(e) => e.preventDefault()}
                         >
                         <span className="number">{formattedDate}</span>
                         <span className="bgEvent">{this.renderBgEvent(dateFns.parse(cloneDay), groupingEvent)}</span>
