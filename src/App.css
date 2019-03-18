@@ -1,33 +1,380 @@
-.App {
-  text-align: center;
+/*Created by Matej Kovachttp://moodydev.io*/
+/* FONT IMPORTS */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+.icon {
+	font-family:"Material Icons",serif;
+	font-style:normal;
+	display:inline-block;
+	vertical-align:middle;
+	line-height:1;
+	text-transform:none;
+	letter-spacing:normal;
+	word-wrap:normal;
+	white-space:nowrap;
+	direction:ltr;
+	-webkit-font-smoothing:antialiased;
+	text-rendering:optimizeLegibility;
+	-moz-osx-font-smoothing:grayscale;
+	font-feature-settings:"liga";
+}
+/* VARIABLES */:root {
+	--main-color:#1a8fff;
+	--text-color:#777;
+	--text-color-light:#ccc;
+	--border-color:#eee;
+	--bg-color:#f9f9f9;
+	--neutral-color: #fff;
+}
+/* GENERAL */
+* {
+	box-sizing:border-box;
+}
+body {
+	font-family:"Open Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+	font-size:1em;
+	font-weight:300;
+	line-height:1.5;
+	color:var(--text-color);
+	background:var(--bg-color);
+}
+header {
+	display:block;
+	width:100%;
+	padding:1.75em 0;
+	border-bottom:1px solid var(--border-color);
+	background:var(--neutral-color);
+}
+header #logo {
+	font-size:175%;
+	text-align:center;
+	color:var(--main-color);
+	line-height:1;
+}
+header #logo .icon {
+	padding-right:0.25em;
+}
+main {
+	display:block;
+	margin:0 auto;
+	margin-top:5em;
+	max-width: 75em;
+}
+/* GRID */
+.row {
+	margin:0;
+	padding:0;
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	width:100%;
+}
+.row-middle {
+	align-items:center;
+}
+.col {
+	flex-grow:1;
+	flex-basis:0;
+	max-width:100%;
+}
+.col-start {
+	justify-content:flex-start;
+	text-align:left;
+}
+.col-center {
+	justify-content:center;
+	text-align:center;
+}
+.col-end {
+	justify-content:flex-end;
+	text-align: right;
+}
+/* Calendar */
+.calendar {
+	display:block;
+	position:relative;
+	width:100%;
+	background:var(--neutral-color);
+	border:1px solid var(--border-color);
+}
+.calendar .header {
+	text-transform:uppercase;
+	font-weight:700;
+	font-size:115%;
+	padding:1.5em 0;
+	border-bottom:1px solid var(--border-color);
+}
+.calendar .header .icon {
+	cursor:pointer;
+	transition:0.15s ease-out;
+}
+.calendar .header .icon:hover {
+	transform:scale(1.75);
+	transition:0.25s ease-out;
+	color:var(--main-color);
+}
+.calendar .header .icon:first-of-type {
+	margin-left:1em;
+}
+.calendar .header .icon:last-of-type {
+	margin-right:1em;
+}
+.calendar .days {
+	text-transform:uppercase;
+	font-weight:400;
+	color:var(--text-color-light);
+	font-size:70%;
+	padding:0.75em 0;
+	border-bottom:1px solid var(--border-color);
+}
+.calendar .body .cell {
+	position:relative;
+	height:10em;
+	border-right:1px solid var(--border-color);
+	overflow:hidden;
+	cursor:pointer;
+	background:var(--neutral-color);
+	transition:0.25s ease-out;
+}
+.calendar .body .cell:hover {
+	background:var(--bg-color);
+	transition: 0.5s ease-out;
+}
+.calendar .body .selected {
+	/* border-left:10px solid transparent;*/
+	border-image:linear-gradient(45deg,#1a8fff 0%,#53cbf1 40%);
+	border-image-slice:1;
+}
+.calendar .body .row {
+	border-bottom:1px solid var(--border-color);
+}
+.calendar .body .row:last-child {
+	border-bottom:none;
+}
+.calendar .body .cell:last-child {
+	border-right:none;
+}
+.calendar .body .cell .number {
+	position:absolute;
+	font-size:82.5%;
+	line-height:1;
+	top:0.75em;
+	right:0.75em;
+	font-weight:700;
+	z-index:2;
+}
+.calendar .body .disabled {
+	color:var(--text-color-light);
+	pointer-events:none;
+}
+.calendar .body .cell .bg {
+	font-weight:700;
+	line-height:1;
+	color:var(--main-color);
+	opacity:0;
+	font-size:8em;
+	position:absolute;
+	top:-0.2em;
+	right:-0.05em;
+	transition:0.25s ease-out;
+	letter-spacing:-0.07em;
+	z-index:2;
+}
+.calendar .body .cell .bgEvent {
+	height:100%;
+	width:100%;
+	position:absolute;
+	padding:5px;
+	transition:0.25s ease-out;
+	letter-spacing:-0.07em;
+	z-index:1;
+}
+.itemBgEvent {
+	overflow:hidden;
+}
+.calendar .body .cell:hover .bg,.calendar .body .selected .bg {
+	opacity:0.05;
+	transition:0.5s ease-in;
+}
+.calendar .body .col {
+	flex-grow:0;
+	flex-basis:calc(100% / 7);
+	width:calc(100% / 7);
+}
+* {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+form header {
+	margin:0 0 20px 0;
+}
+form header div {
+	font-size:90%;
+	color:#999;
+}
+form header h2 {
+	margin:0 0 5px 0;
+}
+form>div {
+	clear:both;
+	overflow:hidden;
+	padding:1px;
+	margin:0 0 10px 0;
+}
+form>div>fieldset>div>div {
+	margin:0 0 5px 0;
+}
+form>div>label,legend {
+	width:25%;
+	float:left;
+	padding-right:10px;
+}
+form>div>div,form>div>fieldset>div {
+	width:75%;
+	float:right;
+}
+form>div>fieldset label {
+	font-size:90%;
+}
+fieldset {
+	border:0;
+	padding:0;
+}
+input[type=text],input[type=email],input[type=url],input[type=password],textarea {
+	width:100%;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #eee;
+	border-bottom:1px solid #eee;
+}
+input[type=text],input[type=email],input[type=url],input[type=password] {
+	width:50%;
+}
+input[type=text]:focus,input[type=email]:focus,input[type=url]:focus,input[type=password]:focus,textarea:focus {
+	outline:0;
+	border-color:#4697e4;
+}
+.form-control {
+	display:block;
+	width:100% !important;
+	height:calc(1.5em+0.75rem+2px);
+	padding:0.375rem 0.75rem;
+	font-size:0.875rem;
+	font-weight:400;
+	line-height:1.5;
+	color:#495057;
+	background-color:#fff;
+	background-clip:padding-box;
+	border:1px solid #f5f5f5;
+	border-radius:0.25rem;
+	transition:border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+}
+.btn {
+	display:inline-block;
+	font-weight:400;
+	color:#fff;
+	text-align:center;
+	vertical-align:middle;
+	user-select:none;
+	background-color:#7367F0;
+	border:1px solid transparent;
+	padding:0.375rem 0.75rem;
+	font-size:0.875rem;
+	line-height:1.5;
+	border-radius:0.25rem;
+	transition:color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+}
+@media (prefers-reduced-motion:reduce) {
+	.btn {
+		transition:none;
+	}
+}
+.btn:hover {
+	color:#678098;
+	text-decoration:none;
+}
+.btn:focus,.btn.focus {
+	outline:0;
+	box-shadow:0 0 0 0.2rem rgba(115,103,240,0.25);
+}
+.btn.disabled,.btn:disabled {
+	opacity:0.65;
+}
+.btn-primary {
+	color:#fff;
+	background-color:#7367F0;
+	border-color:#7367F0;
+}
+.btn-primary:hover {
+	color:#fff;
+	background-color:#5344ed;
+	border-color:#4839eb;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.btn-delete {
+	color:#fff;
+	background-color:red;
+	border-color:red;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-delete:hover {
+	color:#fff;
+	background-color:maroon;
+	border-color:maroon;
 }
-
-.App-link {
-  color: #61dafb;
+.btn-primary:focus,.btn-primary.focus {
+	box-shadow:0 0 0 0.2rem rgba(136,126,242,0.5);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-primary.disabled,.btn-primary:disabled {
+	color:#fff;
+	background-color:#7367F0;
+	border-color:#7367F0;
+}
+.btn-primary:not(:disabled):not(.disabled):active,.btn-primary:not(:disabled):not(.disabled).active,.show>.btn-primary.dropdown-toggle {
+	color:#fff;
+	background-color:#4839eb;
+	border-color:#3e2dea;
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus,.btn-primary:not(:disabled):not(.disabled).active:focus,.show>.btn-primary.dropdown-toggle:focus {
+	box-shadow:0 0 0 0.2rem rgba(136,126,242,0.5);
+}
+.button-close {
+	float:right;
+	margin-bottom:20px;
+	line-height:1;
+	font-weight:700
+}
+.button-close:hover {
+	color:#fff;
+	background-color:#5344ed;
+	border-color:#4839eb;
+}
+@media (max-width:600px) {
+	form>div {
+			margin:0 0 15px 0;
+	}
+	form>div>label,legend {
+			 width:100%;
+			float:none;
+			margin:0 0 5px 0;
+	}
+	form>div>div,form>div>fieldset>div {
+			width:100%;
+			float:none;
+	}
+	input[type=text],input[type=email],input[type=url],input[type=password],textarea,select {
+			width:100%;
+	}
+}
+@media (min-width:1200px) {
+	form>div>label,legend {
+				text-align:left;
+	}
+}
+.ReactModal__Overlay--after-open {
+	z-index:3;
+	bottom:none;
+}
+.ReactModal__Content--after-open {
+	bottom: unset !important;
 }
